@@ -101,7 +101,7 @@ function fornecedores()
          form_fornecedores.activate
 
          return(nil)
-         
+
 
 /*******************************/
 Procedure BotonesToolBar()
@@ -121,7 +121,6 @@ Procedure BotonesToolBar()
               			  fontbold .T.
               			  fontcolor _preto_001
               			  alignment top
-              			  Forcescale .t.
               			  IMAGEMARGIN {2, 0, 0, 0}
                        backcolor _branco_001
 		               end button
@@ -138,7 +137,6 @@ Procedure BotonesToolBar()
               			  fontbold .T.
               			  fontcolor _preto_001
               			  alignment top
-              			  Forcescale .t.
               			  IMAGEMARGIN {2, 0, 0, 0}
                        backcolor _branco_001
 				    end button
@@ -155,7 +153,6 @@ Procedure BotonesToolBar()
               			  fontbold .T.
               			  fontcolor _preto_001
               			  alignment top
-              			  scale .T.
               			  IMAGEMARGIN {2, 0, 0, 0}
               			  vertical .T.
               			  flat .T.

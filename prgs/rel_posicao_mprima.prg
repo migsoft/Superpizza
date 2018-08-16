@@ -29,6 +29,7 @@ function posicao_mprima()
                           bold;
                           fontcolor _preto_001;
                           transparent
+                          
                 @ 030,010 label lbl_002;
                           of form_estoque_mprima;
                           value 'estoque, mostrando a quantidade atual disponível.';

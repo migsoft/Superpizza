@@ -76,7 +76,7 @@ function main()
          public _nome_unidade := 0
          public a_onde        := {'Delivery','Mesa','Balcão'}
          public a_situacao    := {'Montando','Assando','Sendo entregue','PEDIDO OK'}
-         
+
          * variáveis para liberar o acesso
          public _a_001 := _a_002 := _a_003 := _a_004 := _a_005 := .F.
          public _a_006 := _a_007 := _a_008 := _a_009 := _a_010 := .F.
@@ -638,25 +638,33 @@ function main()
                 on key F9 action produtos()
                 on key F10 action mostra_entregas()
                 on key escape action form_main.release
-                
+
          end window
 
          form_main.maximize
          form_main.activate
 
          return(nil)
-         
+
 *-------------------------------------------------------------------------------*
 static function cria_dbf_cdx()
 
        local a_dbf := {}
        local x_largura := getdesktopwidth()
        local x_altura := getdesktopheight()
+       LOCAL cDir
+       LOCAL nLen := ADir( path_dbf+"*.*" )  // Number of files in this directory
 
-	   if x_largura < 1024 .and. x_altura < 768
-	      msgexclamation('Este programa não funciona nesta resolução de tela, tecle ENTER','Atenção')
-		  form_main.release
-	   endif
+       if x_largura < 1024 .and. x_altura < 768
+          msgexclamation('Este programa não funciona nesta resolução de tela, tecle ENTER','Atenção')
+          form_main.release
+       endif
+
+       IF !nLen > 0
+          IF !MakeDir( cDir := hb_DirSepToOS( path_dbf ) ) == 0
+             MsgInfo( "Error al crear Directorio: " + path_dbf )
+          ENDIF
+       ENDIF
 
        * dados da empresa
 	    if .not. file(path_dbf+'empresa.dbf')
