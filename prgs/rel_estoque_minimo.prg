@@ -1,9 +1,9 @@
 /*
-  sistema     : superchef pizzaria
-  programa    : relatório controle do estoque mínimo
-  compilador  : xharbour 1.2 simplex
-  lib gráfica : minigui 1.7 extended
-  programador : marcelo neves
+sistema     : superchef pizzaria
+programa    : relatório controle do estoque mínimo
+compilador  : xharbour 1.2 simplex
+lib gráfica : minigui 1.7 extended
+programador : marcelo neves
 */
 
 #include 'minigui.ch'
@@ -12,162 +12,162 @@
 
 function relatorio_estoque_minimo()
 
-         define window form_est_minimo;
-                at 000,000;
-                width 400;
-                height 250;
-                title 'Relação estoque mínimo';
-                icon path_imagens+'icone.ico';
-                modal;
-                nosize
+    define window form_est_minimo;
+        at 000,000;
+        width 400;
+        height 250;
+        title 'Relação estoque mínimo';
+        icon 'icone';
+        modal;
+        nosize
 
-                @ 010,010 label lbl_001;
-                          of form_est_minimo;
-                          value 'Este relatório irá listar somente os produtos que';
-                          autosize;
-                          font 'tahoma' size 010;
-                          bold;
-                          fontcolor _preto_001;
-                          transparent
-                @ 030,010 label lbl_002;
-                          of form_est_minimo;
-                          value 'estejam com o estoque atual igual ou abaixo do mínimo';
-                          autosize;
-                          font 'tahoma' size 010;
-                          bold;
-                          fontcolor _preto_001;
-                          transparent
-                @ 050,010 label lbl_003;
-                          of form_est_minimo;
-                          value 'cadastrado. Somente produtos que não sejam - pizza -';
-                          autosize;
-                          font 'tahoma' size 010;
-                          bold;
-                          fontcolor _preto_001;
-                          transparent
-                @ 070,010 label lbl_004;
-                          of form_est_minimo;
-                          value 'aparecerão no relatório.';
-                          autosize;
-                          font 'tahoma' size 010;
-                          bold;
-                          fontcolor _preto_001;
-                          transparent
+        @ 010,010 label lbl_001;
+            of form_est_minimo;
+            value 'Este relatório irá listar somente os produtos que';
+            autosize;
+            font 'tahoma' size 010;
+            bold;
+            fontcolor _preto_001;
+            transparent
+        @ 030,010 label lbl_002;
+            of form_est_minimo;
+            value 'estejam com o estoque atual igual ou abaixo do mínimo';
+            autosize;
+            font 'tahoma' size 010;
+            bold;
+            fontcolor _preto_001;
+            transparent
+        @ 050,010 label lbl_003;
+            of form_est_minimo;
+            value 'cadastrado. Somente produtos que não sejam - pizza -';
+            autosize;
+            font 'tahoma' size 010;
+            bold;
+            fontcolor _preto_001;
+            transparent
+        @ 070,010 label lbl_004;
+            of form_est_minimo;
+            value 'aparecerão no relatório.';
+            autosize;
+            font 'tahoma' size 010;
+            bold;
+            fontcolor _preto_001;
+            transparent
 
                 * linha separadora
-                define label linha_rodape
-                       col 000
-                       row form_est_minimo.height-090
-                       value ''
-                       width form_est_minimo.width
-                       height 001
-                       backcolor _preto_001
-                       transparent .F.
-                end label
+        define label linha_rodape
+        col 000
+        row form_est_minimo.height-090
+        value ''
+        width form_est_minimo.width
+        height 001
+        backcolor _preto_001
+        transparent .F.
+        end label
 
                 * botões
-                define button button_ok
-                       picture path_imagens+'img_relatorio.bmp'
-                       col form_est_minimo.width-255
-                       row form_est_minimo.height-085
-                       width 150
-                       height 050
-                       caption 'Ok, imprimir'
-                       action relatorio()
-                       fontbold .T.
-                       tooltip 'Gerar o relatório'
-                       flat .F.  //                    noxpstyle .T.
-                end button
-                define button button_cancela
-                       picture path_imagens+'img_sair.bmp'
-                       col form_est_minimo.width-100
-                       row form_est_minimo.height-085
-                       width 090
-                       height 050
-                       caption 'Voltar'
-                       action form_est_minimo.release
-                       fontbold .T.
-                       tooltip 'Sair desta tela'
-                       flat .F.   //                     noxpstyle .T.
-                end button
+        define button button_ok
+        picture 'img_relatorio'
+        col form_est_minimo.width-255
+        row form_est_minimo.height-085
+        width 150
+        height 050
+        caption 'Ok, imprimir'
+        action relatorio()
+        fontbold .T.
+        tooltip 'Gerar o relatório'
+        flat .F.                                    //                    noxpstyle .T.
+        end button
+        define button button_cancela
+        picture 'img_sair'
+        col form_est_minimo.width-100
+        row form_est_minimo.height-085
+        width 090
+        height 050
+        caption 'Voltar'
+        action form_est_minimo.release
+        fontbold .T.
+        tooltip 'Sair desta tela'
+        flat .F.                                    //                     noxpstyle .T.
+        end button
 
-                on key escape action thiswindow.release
+        on key escape                  action thiswindow.release
 
-         end window
+    end window
 
-         form_est_minimo.center
-         form_est_minimo.activate
+    form_est_minimo.center
+    form_est_minimo.activate
 
-         return(nil)
-*-------------------------------------------------------------------------------
+return(nil)
+*------------------------------------------------------------*
 static function relatorio()
 
-       local p_linha := 040
-       local u_linha := 260
-       local linha   := p_linha
-       local pagina  := 1
-       
-       SELECT PRINTER DIALOG PREVIEW
+    local p_linha := 040
+    local u_linha := 260
+    local linha   := p_linha
+    local pagina  := 1
 
-       START PRINTDOC NAME 'Gerenciador de impressão'
-       START PRINTPAGE
+    SELECT PRINTER DIALOG PREVIEW
 
-       dbselectarea('produtos')
-       produtos->(ordsetfocus('nome_longo'))
-       produtos->(dbgotop())
-       
-       cabecalho(pagina)
-       
-       while .not. eof()
+    START PRINTDOC NAME 'Gerenciador de impressão'
+    START PRINTPAGE
 
-             if produtos->qtd_estoq <= produtos->qtd_min .and. !produtos->pizza
-                @ linha,010 PRINT alltrim(produtos->codigo) FONT 'courier new' SIZE 010
-                @ linha,030 PRINT alltrim(produtos->nome_longo) FONT 'courier new' SIZE 010
-                @ linha,090 PRINT str(produtos->qtd_min,6) FONT 'courier new' SIZE 010
-                @ linha,130 PRINT str(produtos->qtd_estoq,6) FONT 'courier new' SIZE 010
-                @ linha,170 PRINT str(produtos->qtd_estoq-produtos->qtd_min,6) FONT 'courier new' SIZE 010
-             
-                linha += 5
-                
-                if linha >= u_linha
-                   END PRINTPAGE
-                   START PRINTPAGE
-                   pagina ++
-                   cabecalho(pagina)
-                   linha := p_linha
-                endif
-             endif
-             
-             produtos->(dbskip())
+    dbselectarea('produtos')
+    produtos->(ordsetfocus('nome_longo'))
+    produtos->(dbgotop())
 
-       end
+    cabecalho(pagina)
 
-       rodape()
-       
-       END PRINTPAGE
-       END PRINTDOC
+    while .not. eof()
 
-       return(nil)
-*-------------------------------------------------------------------------------
+        if produtos->qtd_estoq <= produtos->qtd_min .and. !produtos->pizza
+            @ linha,010 PRINT alltrim(produtos->codigo) FONT 'courier new' SIZE 010
+            @ linha,030 PRINT alltrim(produtos->nome_longo) FONT 'courier new' SIZE 010
+            @ linha,090 PRINT str(produtos->qtd_min,6) FONT 'courier new' SIZE 010
+            @ linha,130 PRINT str(produtos->qtd_estoq,6) FONT 'courier new' SIZE 010
+            @ linha,170 PRINT str(produtos->qtd_estoq-produtos->qtd_min,6) FONT 'courier new' SIZE 010
+
+            linha += 5
+
+            if linha >= u_linha
+                END PRINTPAGE
+                START PRINTPAGE
+                pagina ++
+                cabecalho(pagina)
+                linha := p_linha
+            endif
+        endif
+
+        produtos->(dbskip())
+
+    end
+
+    rodape()
+
+    END PRINTPAGE
+    END PRINTDOC
+
+return(nil)
+*------------------------------------------------------------*
 static function cabecalho(p_pagina)
 
-       @ 007,010 PRINT IMAGE path_imagens+'logotipo.bmp' WIDTH 050 HEIGHT 020 STRETCH
-       @ 010,070 PRINT 'RELAÇÃO ESTOQUE MÍNIMO' FONT 'courier new' SIZE 018 BOLD
-       @ 024,070 PRINT 'página : '+strzero(p_pagina,4) FONT 'courier new' SIZE 012
+    @ 007,010 PRINT IMAGE 'logotipo' WIDTH 050 HEIGHT 020 STRETCH
+    @ 010,070 PRINT 'RELAÇÃO ESTOQUE MÍNIMO' FONT 'courier new' SIZE 018 BOLD
+    @ 024,070 PRINT 'página : '+strzero(p_pagina,4) FONT 'courier new' SIZE 012
 
-       @ 030,000 PRINT LINE TO 030,205 PENWIDTH 0.5 COLOR _preto_001
+    @ 030,000 PRINT LINE TO 030,205 PENWIDTH 0.5 COLOR _preto_001
 
-       @ 035,010 PRINT 'CÓDIGO' FONT 'courier new' SIZE 010 BOLD
-       @ 035,030 PRINT 'PRODUTO' FONT 'courier new' SIZE 010 BOLD
-       @ 035,090 PRINT 'QTD.MÍNIMA' FONT 'courier new' SIZE 010 BOLD
-       @ 035,130 PRINT 'QTD.ESTOQUE' FONT 'courier new' SIZE 010 BOLD
-       @ 035,170 PRINT 'QTD.ABAIXO' FONT 'courier new' SIZE 010 BOLD
+    @ 035,010 PRINT 'CÓDIGO' FONT 'courier new' SIZE 010 BOLD
+    @ 035,030 PRINT 'PRODUTO' FONT 'courier new' SIZE 010 BOLD
+    @ 035,090 PRINT 'QTD.MÍNIMA' FONT 'courier new' SIZE 010 BOLD
+    @ 035,130 PRINT 'QTD.ESTOQUE' FONT 'courier new' SIZE 010 BOLD
+    @ 035,170 PRINT 'QTD.ABAIXO' FONT 'courier new' SIZE 010 BOLD
 
-       return(nil)
-*-------------------------------------------------------------------------------
+return(nil)
+*------------------------------------------------------------*
 static function rodape()
 
-       @ 275,000 PRINT LINE TO 275,205 PENWIDTH 0.5 COLOR _preto_001
-       @ 276,010 PRINT 'impresso em '+dtoc(date())+' as '+time() FONT 'courier new' SIZE 008
+    @ 275,000 PRINT LINE TO 275,205 PENWIDTH 0.5 COLOR _preto_001
+    @ 276,010 PRINT 'impresso em '+dtoc(date())+' as '+time() FONT 'courier new' SIZE 008
 
-       return(nil)
+return(nil)
