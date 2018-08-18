@@ -41,7 +41,7 @@ function promocao()
         width 900;
         height 600;
         title 'Incluir ou Excluir Promoção';
-        icon path_imagens+'icone.ico';
+        icon 'icone';
         modal;
         nosize;
         on init zera_temporario_2();
@@ -187,7 +187,7 @@ function promocao()
             parent form_promocao;
             caption 'Filtrar informações';
             width 200 height 040;
-            picture path_imagens+'img_filtro.bmp';
+            picture 'img_filtro';
             action filtrar_informacoes_2();
             tooltip 'Clique aqui para separar as informações e visualizar as promoções antes de efetivá-las'
 
@@ -217,21 +217,21 @@ function promocao()
             parent form_promocao;
             caption 'Excluir promoção';
             width 150 height 040;
-            picture path_imagens+'img_rpromo.bmp';
+            picture 'img_rpromo';
             action tira_da_promocao();
             tooltip 'Clique aqui para retirar da promoção todos os produtos selecionados'
         @ 520,405 button botao_reajustar;
             parent form_promocao;
             caption 'Ativar as promoções com base na projeção';
             width 300 height 040;
-            picture path_imagens+'img_aplicar.bmp';
+            picture 'img_aplicar';
             action gravar_reajuste_2();
             tooltip 'Clique aqui para gravar a promoção no banco de dados'
         @ 520,710 button botao_sair;
             parent form_promocao;
             caption 'Sair desta tela';
             width 180 height 040;
-            picture path_imagens+'img_sair.bmp';
+            picture 'img_sair';
             action (zera_acesso_2(),form_promocao.release);
             tooltip 'Clique aqui para sair'
 
@@ -498,4 +498,4 @@ static function zera_temporario_2()
     zap
     pack
 
-    return(nil)
+return(nil)
